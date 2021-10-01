@@ -1,0 +1,1 @@
+# Meus aliases para zsh

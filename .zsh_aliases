@@ -1,0 +1,52 @@
+#! /usr/bin/zsh
+
+#sufix aliases
+alias -s json=code
+
+#normal aliases
+alias windir='cd /mnt/c/Users/gabriel'
+alias exp='explorer.exe'
+
+setpro(){
+  if [ ! -d $HOME/.vars ];  then
+    mkdir .vars
+    echo "$HOME/.vars criado"
+  fi
+
+  if [ ! -f $HOME/.vars/current_project ];  then
+    touch $HOME/.vars/current_project
+    echo "$HOME/.vars/current_project"
+  fi
+  echo -n "Quer colocar como projeto $PWD? [Y/n]" 
+  read ANSWER
+  case $ANSWER in
+    y|Y)
+      echo $PWD > ~/.vars/current_project
+    ;;
+    *)
+    CURRENT_PROJECT_VAR=`cat ~/.vars/current_project`
+      echo "O projeto atual continua $CURRENT_PROJECT_VAR"
+  esac
+  
+}
+go(){
+  cd $(cat ~/.vars/current_project)
+}
+
+mk-list(){
+  if [ -d "$PWD/bin" ]; then
+    ZIP_FILE=$(echo ${PWD##*/}.zip)
+    PATH_TO_MOVE=/mnt/c/Users/gabriel/Documents/ufpel/Algo_Prog
+
+    if [ -f "$PATH_TO_MOVE/$ZIP_FILE" ]; then
+      echo "Já existe um arquivo $ZIPE_FILE no diretório $PATH_TO_MOVE"
+    
+    else
+      zip "$ZIP_FILE" *.c 
+      mv "$ZIP_FILE" "$PATH_TO_MOVE"
+      echo "$ZIP_FILE movido para $PATH_TO_MOVE"
+    fi
+  else
+    echo "Diretório improprio para fazer lista"
+  fi 
+}
