@@ -1,5 +1,8 @@
 #! /usr/bin/zsh
 
+#Envairoment variables
+export CWP=$(cat ~/.vars/current_project)
+
 #sufix aliases
 alias -s json=code
 
@@ -7,33 +10,16 @@ alias -s json=code
 alias windir='cd /mnt/c/Users/gabriel'
 alias exp='explorer.exe'
 
-setpro(){
-  if [ ! -d $HOME/.vars ];  then
-    mkdir .vars
-    echo "$HOME/.vars criado"
-  fi
-
-  if [ ! -f $HOME/.vars/current_project ];  then
-    touch $HOME/.vars/current_project
-    echo "$HOME/.vars/current_project"
-  fi
-  echo -n "Quer colocar como projeto $PWD? [Y/n]" 
-  read ANSWER
-  case $ANSWER in
-    y|Y)
-      echo $PWD > ~/.vars/current_project
-    ;;
-    *)
-    CURRENT_PROJECT_VAR=`cat ~/.vars/current_project`
-      echo "O projeto atual continua $CURRENT_PROJECT_VAR"
-  esac
-  
-}
-go(){
-  cd $(cat ~/.vars/current_project)
+function setpro(){
+  ~/zsh_aliases/pm.sh $@
+  export CWP=$(cat ~/.vars/current_project)
 }
 
-mk-list(){
+function go(){
+  cd $CWP
+}
+
+mklist(){
   if [ -d "$PWD/bin" ]; then
     ZIP_FILE=$(echo ${PWD##*/}.zip)
     PATH_TO_MOVE=/mnt/c/Users/gabriel/Documents/ufpel/Algo_Prog
