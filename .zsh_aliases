@@ -1,7 +1,7 @@
 #! /usr/bin/zsh
 
-#Envairoment variables
-export CWP=$(cat ~/.vars/current_project)
+#Plugins
+source ~/zsh_aliases/PM/main.sh
 
 #sufix aliases
 alias -s json=code
@@ -9,16 +9,25 @@ alias -s json=code
 #normal aliases
 alias windir='cd /mnt/c/Users/gabriel'
 alias exp='explorer.exe'
+# alias prs="setpro -l"
 
-function setpro(){
-  ~/zsh_aliases/pm.sh $@
-  export CWP=$(cat ~/.vars/current_project)
-}
 
-function go(){
-  cd $CWP
-}
+# ------ Project Manager ----------
+# function setpro(){
+#   ~/zsh_aliases/pm.sh $@
+#   export CWP=$(cat ~/.vars/current_project)
+# }
 
+# function go(){
+#   if [[ -n "$CWP" ]]; then
+#     cd $CWP
+#   else
+#     echo "Não tenhum projeto como principal, digite setpro -h para mais informações"
+#   fi
+# }
+# ------ Project Manager ----------
+
+# ------ List Maker(c) ----------
 mklist(){
   if [ -d "$PWD/bin" ]; then
     ZIP_FILE=$(echo ${PWD##*/}.zip)
@@ -26,7 +35,6 @@ mklist(){
 
     if [ -f "$PATH_TO_MOVE/$ZIP_FILE" ]; then
       echo "Já existe um arquivo $ZIPE_FILE no diretório $PATH_TO_MOVE"
-    
     else
       zip "$ZIP_FILE" *.c 
       mv "$ZIP_FILE" "$PATH_TO_MOVE"
@@ -36,3 +44,4 @@ mklist(){
     echo "Diretório improprio para fazer lista"
   fi 
 }
+# ------ List Maker(c) ----------

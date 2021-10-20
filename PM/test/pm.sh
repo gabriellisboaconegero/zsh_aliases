@@ -27,19 +27,26 @@ EOF
 }
 
 function list(){
+  local color end
   for i in `seq 1 ${#projects[@]}`; do
-    echo "[$i] - ${projects[$i]}"
+    color=''
+    end=''
+    if [[ $CWP == ${projects[$i]} ]];  then
+      color='\e[1;4;32m'
+      end='\e[21;24;39m'
+    fi
+    echo -e "${color}[$i]$end - ${projects[$i]}"
   done
 }
 
 function getProjectById(){
   if [[ $pro_id = 0 ]]; then
-    CWP=$PWD
+    SWP=$PWD
     return
   fi
   for ((id=1; id<=${#projects[@]}; id++)); do
     if [[ $id = $1 ]]; then
-      CWP=${projects[$id]}
+      SWP=${projects[$id]}
       return
     fi
   done
@@ -49,24 +56,30 @@ function getProjectById(){
 function removeproject(){
   local pro_id=$1
   getProjectById $pro_id
-  exist=`grep "^$CWP$" < $projects_file`
+  exist=`grep "^$SWP$" < $projects_file`
   if [[ -z $exist ]]; then
     echo "Projeto não foi adicionado portanto não pode ser retirado"
     return
   fi
-  echo -n "Quer remover projeto $CWP? [Y/n]" 
+  echo -n "Quer remover projeto $SWP? [Y/n]" 
   read ANSWER
   case $ANSWER in
     y|Y)
       if [[ ! -d $exist ]]; then
-        echo "Diretório do projeto não exite mais, retirando $CWP"
+        echo "Diretório do projeto não exite mais, retirando $SWP"
       fi
-      echo "" > $projects_file
+
+      #Esvazia arquivo antes de colocar os projetos denovo
+      : > $projects_file
       for i in ${projects[@]}; do
-        if [[ $i != $CWP ]]; then
+        if [[ $i != $SWP ]]; then
           echo $i >> $projects_file
         fi
       done
+
+      if [[ "$SWP" == "$CWP" ]]; then
+        : > $current_project_file
+      fi
     ;;
     *);;
   esac
@@ -75,18 +88,22 @@ function removeproject(){
 function setproject(){
   local pro_id=$1
   getProjectById $pro_id
-  echo -n "Quer colocar como projeto principal $CWP? [Y/n]" 
+  if [[ $SWP = `cat $current_project_file` ]]; then
+    echo "O projeto principal já é $SWP"
+    return
+  fi
+  echo -n "Quer colocar como projeto principal $SWP? [Y/n]" 
   read ANSWER
   case $ANSWER in
     y|Y)
-      exist=`grep "^$CWP$" < $projects_file`
+      exist=`grep "^$SWP$" < $projects_file`
       if [[ ! -d $exist ]]; then
-        echo $CWP >> $projects_file
+        echo $SWP >> $projects_file
       fi
-      echo $CWP > $current_project_file
-      # echo $CWP > $projects_file
+      echo $SWP > $current_project_file
+      # echo $SWP > $projects_file
       # for i in ${projects[@]}; do
-      #   if [[ $i != $CWP ]]; then
+      #   if [[ $i != $SWP ]]; then
       #     echo $i >> $projects_file
       #   fi
       # done
