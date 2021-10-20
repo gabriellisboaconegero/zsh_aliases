@@ -118,6 +118,6 @@ function PM::list()
       color='\e[1;4;32m'
       end='\e[21;24;39m'
     fi
-    echo -e "${color}[$i]$end - ${PM_PROJECTS[$i]}"
+    echo -e "${color}[$i]$end ➜ ${PM_PROJECTS[$i]}"
   done
 }
