@@ -31,6 +31,7 @@ fi
 
 source ~/zsh_aliases/PM/lib.sh
 source ~/zsh_aliases/PM/functions.sh
+source ~/zsh_aliases/PM/utils/list.sh
 
 PM::update "Cannot find current project in initialization"
 
@@ -44,3 +45,5 @@ alias sepro="PM::set"
 alias rmpro="PM::remove"
 alias prolis="PM::list"
 alias go="PM::go"
+alias setpro="PM::list_set"
+alias gopro="PM::list_go"

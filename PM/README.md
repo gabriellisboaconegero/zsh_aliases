@@ -18,7 +18,7 @@
   |:---   |    :---    |
   |<input type="checkbox" checked disabled>`sepro`|Set `PWD` to Current Working Project.|
   |<input type="checkbox" disabled>`sepro [dir/id]`|Set `dir/id` to Current Working Project.|
-  |<input type="checkbox" disabled>`setpro`|Open [list of projects](#set-list) and choose one of them.<br>Using the keyboard directions keys|
+  |<input type="checkbox" checked disabled>`setpro`|Open [list of projects](#set-list) and choose one of them.<br>Using the keyboard directions keys|
 - ### Remove Project
   | Alias | Description|
   |:---   |    :---    |

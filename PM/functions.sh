@@ -101,23 +101,23 @@ function PM::remove()
 
 function PM::go()
 {
-  if [[ $PM_NO_PROJECT == false ]]; then
+  if [[ -n $1 ]]; then
+    cd ${PM_PROJECTS[$1]}
+  elif [[ $PM_NO_PROJECT == false ]]; then
     cd $CWP
   else
     echo "Ther is not a current project, set one to go"
   fi
 }
 
-function PM::list()
+function PM::list_set()
 {
-  local color end
-  for i in `seq 1 ${#PM_PROJECTS[@]}`; do
-    color=''
-    end=''
-    if [[ $CWP == ${PM_PROJECTS[$i]} ]];  then
-      color='\e[1;4;32m'
-      end='\e[21;24;39m'
-    fi
-    echo -e "${color}[$i]$end ➜ ${PM_PROJECTS[$i]}"
-  done
+  local callback=PM::set
+  PM::select_option "${PM_PROJECTS[@]}"
+}
+
+function PM::list_go()
+{
+  local callback=PM::go
+  PM::select_option "${PM_PROJECTS[@]}"
 }

@@ -2,6 +2,8 @@
 
 #Plugins
 source ~/zsh_aliases/PM/main.sh
+#Show list of projects when initing
+prolis
 
 #sufix aliases
 alias -s json=code
