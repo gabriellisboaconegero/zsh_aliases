@@ -2,6 +2,7 @@
 
 #Plugins
 source ~/zsh_aliases/PM/main.sh
+source ~/zsh_aliases/UFPR-SSH/main.sh
 #Show list of projects when initing
 prolis
 
@@ -9,25 +10,11 @@ prolis
 alias -s json=code
 
 #normal aliases
-alias windir='cd /mnt/c/Users/gabriel'
 alias exp='explorer.exe'
-# alias prs="setpro -l"
+alias p='python3'
 
-
-# ------ Project Manager ----------
-# function setpro(){
-#   ~/zsh_aliases/pm.sh $@
-#   export CWP=$(cat ~/.vars/current_project)
-# }
-
-# function go(){
-#   if [[ -n "$CWP" ]]; then
-#     cd $CWP
-#   else
-#     echo "Não tenhum projeto como principal, digite setpro -h para mais informações"
-#   fi
-# }
-# ------ Project Manager ----------
+#Variables
+export winhome='/mnt/c/Users/gabriel'
 
 # ------ List Maker(c) ----------
 mklist(){

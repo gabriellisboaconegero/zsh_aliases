@@ -61,12 +61,12 @@ function PM::select_option(){
   local startrow=$(($lastrow - $# - 1))
 
   cle(){
-    echo "hello"
     tput cnorm
+    return
   }
 
   # ensure cursor and input echoing back on upon a ctrl+c during read -s
-  trap "cle" EXIT
+  trap "cle" 2
   tput civis
 
   local selected=0

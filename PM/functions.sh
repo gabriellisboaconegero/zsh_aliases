@@ -68,17 +68,19 @@ function PM::remove()
   pro_id=$1
   PM::get_from_id SWP $pro_id
   exist_in_stack=`grep "^$SWP$" < $PM_PROJECTS_FILE`
-  if [[ -z $exist_in_stack ]]; then
+  if [[ ! -d $SWP && -n $exist_in_stack ]]; then
+    echo "Project directory doesn't exit, but is pushed"
+    echo -n "Remove $SWP? [Y/n]"
+  elif [[ ! -d $SWP && -z $exist_in_stack ]]; then
+    echo "Project directory doesn't exist"
+    return
+  elif [[ -d $SWP && -z $exist_in_stack ]]; then
     echo "Project haven't been pushed, can't remove"
     return
-  elif [[ ! -d $SWP ]]; then
-    echo "Project doesn't exist, can't rmeove"
-    return
-  elif [[ ! -d $exist_in_stack ]]; then
-    echo "Poject doesn't exist but is pushed"
+  elif [[ -d $SWP && -n $exist_in_stack ]]; then
+    echo -n "Remove $SWP? [Y/n]"
   fi
 
-  echo -n "Remove $SWP? [Y/n]" 
   read ANSWER
   case $ANSWER in
     y|Y)
@@ -120,4 +122,16 @@ function PM::list_go()
 {
   local callback=PM::go
   PM::select_option "${PM_PROJECTS[@]}"
+  return
+}
+
+function PM::list_remove()
+{
+  local callback=PM::remove
+  if [[ $1 == 0 || -z "$1" ]]; then
+    PM::select_option "${PM_PROJECTS[@]}"
+  else
+    $callback $1
+  fi
+  
 }
